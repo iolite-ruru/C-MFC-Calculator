@@ -29,9 +29,13 @@
 #define btn_clear                       1033
 #define btn_frc                         1033
 #define btn_clear2                      1034
+#define btn_sin                         1034
+#define btn_cos                         1035
 #define btn_abs                         1036
 #define btn_pow2                        1037
 #define btn_pow                         1037
+#define btn_tna                         1038
+#define btn_tan                         1038
 
 // Next default values for new objects
 // 

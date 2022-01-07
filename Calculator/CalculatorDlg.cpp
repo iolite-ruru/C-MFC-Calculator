@@ -8,15 +8,16 @@
 #include "CalculatorDlg.h"
 #include "afxdialogex.h"
 #include<cmath>
+//#include<iostream>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 
-CString temp;
-CString num1;
-CString num2;
+CString temp = _T("");
+CString num1 = _T("");
+CString num2 = _T("");
 
 int op = 0;
 double result;
@@ -99,6 +100,10 @@ BEGIN_MESSAGE_MAP(CCalculatorDlg, CDialogEx)
 	ON_BN_CLICKED(btn_pow, &CCalculatorDlg::OnBnClickedpow)
 	ON_BN_CLICKED(btn_abs, &CCalculatorDlg::OnBnClickedabs)
 	ON_BN_CLICKED(btn_dot, &CCalculatorDlg::OnBnClickeddot)
+	ON_BN_CLICKED(btn_reverse, &CCalculatorDlg::OnBnClickedreverse)
+	ON_BN_CLICKED(btn_sin, &CCalculatorDlg::OnBnClickedsin)
+	ON_BN_CLICKED(btn_cos, &CCalculatorDlg::OnBnClickedcos)
+	ON_BN_CLICKED(btn_tan, &CCalculatorDlg::OnBnClickedtan)
 END_MESSAGE_MAP()
 
 
@@ -190,8 +195,9 @@ HCURSOR CCalculatorDlg::OnQueryDragIcon()
 // 해결방법
 // 1.인자로 대화상자 넘김
 // 2.함수를 추가
+/*
 void CCalculatorDlg::EventClick(CString number) {
-	CString c;
+	CString c = _T("");
 	if (op == 0)
 	{
 		input1 = true;
@@ -204,83 +210,114 @@ void CCalculatorDlg::EventClick(CString number) {
 		num2 += number;
 		c.Format(_T("%f"), num2);
 	}
+	//CCalculatorDlg::edt_input.SetWindowTextA(c);
 	SetDlgItemText(edt_input, c);
 	temp = "";
+	//std::cout << temp << std::endl;
 	//*c
 }
-//eedit
+*/
+void CCalculatorDlg::EventClick(CString param)
+{
+	if (op == 0)
+	{
+		input1 = true;
+		num1 += param;
+		SetDlgItemText(edt_input, num1);
+	}
+	else
+	{
+		input2 = true;
+		num2 += param;
+		SetDlgItemText(edt_input, num2);
+	}
+	temp = "";
+}
+
+
+void CCalculatorDlg::OnBnClickednum0()
+{
+	temp = "0";
+	EventClick(temp);
+}
+
+
 void CCalculatorDlg::OnBnClickednum1()
 {
-	temp += "1";
-	//temp.Format(_T("%f"), "1");
+	temp = "1";
 	EventClick(temp);
 }
 
 
 void CCalculatorDlg::OnBnClickednum2()
 {
-	temp.Format(_T("%f"), "2");
+	temp = "2";
 	EventClick(temp);
 }
 
 
 void CCalculatorDlg::OnBnClickednum3()
 {
-	temp.Format(_T("%f"), "3");
+	temp = "3";
 	EventClick(temp);
 }
 
 
 void CCalculatorDlg::OnBnClickednum4()
 {
-	temp.Format(_T("%f"), "4");
+	temp = "4";
 	EventClick(temp);
 }
 
 
 void CCalculatorDlg::OnBnClickednum5()
 {
-	temp.Format(_T("%f"), "5");
+	temp = "5";
 	EventClick(temp);
 }
 
 
 void CCalculatorDlg::OnBnClickednum6()
 {
-	temp.Format(_T("%f"), "6");
+	temp = "6";
 	EventClick(temp);
 }
 
 
 void CCalculatorDlg::OnBnClickednum7()
 {
-	temp.Format(_T("%f"), "7");
+	temp = "7";
 	EventClick(temp);
 }
 
 
 void CCalculatorDlg::OnBnClickednum8()
 {
-	temp.Format(_T("%f"), "8");
+	temp = "8";
 	EventClick(temp);
 }
 
 
 void CCalculatorDlg::OnBnClickednum9()
 {
-	temp.Format(_T("%f"), "9");
-	EventClick(temp);
-}
-
-void CCalculatorDlg::OnBnClickednum0()
-{
-	temp.Format(_T("%f"), "0");
+	temp = "9";
 	EventClick(temp);
 }
 
 
 void Oper(int param)
 {
+	/*if (param == 2) {
+		if (!input1) {
+			num1 += "-";
+			SetDlgItemText(edt_input, num1);
+		}
+		else {
+			num2 += "-";
+			SetDlgItemText(edt_input, num2);
+		}
+		return;
+	}*/
 	if (input1)
 	{
 		op = param;
@@ -301,77 +338,116 @@ void CCalculatorDlg::OnBnClickedmin()
 {
 	Oper(2);
 }
+
 void CCalculatorDlg::OnBnClickedmul()
 {
 	Oper(3);
 }
+
 void CCalculatorDlg::OnBnClickeddiv()
 {
 	Oper(4);
-}
-void CCalculatorDlg::OnBnClickedrmd() //나머지
-{
-	Oper(5);
 }
 
 void CCalculatorDlg::OnBnClickedfrc() //역수
 {
 	Oper(5);
 }
+
 void CCalculatorDlg::OnBnClickedpow() //제곱
 {
 	Oper(6);
 }
-
 
 void CCalculatorDlg::OnBnClickedabs() //절대값
 {
 	Oper(7);
 }
 
+void CCalculatorDlg::OnBnClickedrmd() //나머지
+{
+	Oper(8);
+}
+void CCalculatorDlg::OnBnClickedsin()
+{
+	Oper(9);
+}
+
+
+void CCalculatorDlg::OnBnClickedcos()
+{
+	Oper(10);
+}
+
+
+void CCalculatorDlg::OnBnClickedtan()
+{
+	Oper(11);
+}
+
+
 void CCalculatorDlg::OnBnClickeddot()
 {
-	
+	if (input1 && num1.Find('.') == -1)
+	{
+		num1 += ".";
+		SetDlgItemText(edt_input, num1);
+	}
+	else if (input2 && num2.Find('.') == -1)
+	{
+		num2 += ".";
+		SetDlgItemText(edt_input, num2);
+	}
 }
 
 void CCalculatorDlg::OnBnClickedeual()
 {
 	if (op)
 	{
+		CString sResult;
+		CString extra;
+		double value1 = _wtof(num1);
+		double value2 = _wtof(num2);
+
 		switch (op)
 		{
 		case 1:
-			result = _wtof(num1) + _wtof(num2);
+			result = value1 + value2;
 			break;
 		case 2:
-			result = _wtof(num1) - _wtof(num2);
+			result = value1 - value2;
 			break;
 		case 3:
-			result = _wtof(num1) * _wtof(num2);
+			result = value1 * value2;
 			break;
 		case 4:
-			result = _wtof(num1) / _wtof(num2);
+			result = value1 / value2;
 			break;
 		case 5:
-			result = _wtof(num2) / _wtof(num1);
+			result = value2 / value1;
 			break;
 		case 6:
-			result = pow(_wtof(num1) , _wtof(num2));
+			GetDlgItemText(edt_input, sResult);
+			extra = _T("1/");
+			result = _wtof(extra + sResult);
 			break;
 		case 7:
-			result = abs(_wtof(num1));
+			GetDlgItemText(edt_input, sResult);
+			result = abs(_wtof(sResult));
+			break;
+		case 8:
+			result = fmod(value1, value2);
 			break;
 		default:
 			break;
 		}
-		CString sResult;
-		//sResult.TrimRight(L"0");
+		round(result);
 		sResult.Format(_T("%f"), result);
 		SetDlgItemText(edt_input, sResult);
 		result = 0;
 		num1 = sResult;
 		num2 = "";
-		input1 = false;
+		input1 = true;
 		input2 = false;
 		op = 0;
 	}
@@ -379,11 +455,26 @@ void CCalculatorDlg::OnBnClickedeual()
 
 void CCalculatorDlg::OnBnClickedclear()
 {
-	SetDlgItemText(edt_input, NULL);
 	result = 0;
 	num1 = "";
 	num2 = "";
 	input1 = false;
 	input2 = false;
 	op = 0;
+	SetDlgItemText(edt_input, num1);
 }
+
+void CCalculatorDlg::OnBnClickedreverse()
+{
+	if (input1)
+	{
+		num1 = _T("") + num1;
+	}
+	else
+	{
+		
+	}
+}
+
+
+

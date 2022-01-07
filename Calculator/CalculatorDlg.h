@@ -11,8 +11,7 @@ class CCalculatorDlg : public CDialogEx
 // 생성입니다.
 public:
 	CCalculatorDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
-	void EventClick(CString number);
-
+	
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_CALCULATOR_DIALOG };
@@ -54,4 +53,9 @@ public:
 	afx_msg void OnBnClickedpow();
 	afx_msg void OnBnClickedabs();
 	afx_msg void OnBnClickeddot();
+	void EventClick(CString param);
+	afx_msg void OnBnClickedreverse();
+	afx_msg void OnBnClickedsin();
+	afx_msg void OnBnClickedcos();
+	afx_msg void OnBnClickedtan();
 };
